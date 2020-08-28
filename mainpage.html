@@ -1,0 +1,26 @@
+{% block title %}Main Page{% endblock %}
+<html>
+<body>
+<form method="post" action="/" style="margin:200px;">
+            {% csrf_token %}
+            Link
+            <div class="form-group">
+                    {{ form.Link }}
+                  </div>
+                  Bigger than
+                  <div class="form-group">
+                    {{ form.BiggerThan }}
+                  </div>
+                  Smaller than
+                  <div class="form-group">
+                      {{ form.SmallerThan }}
+                    </div>
+                    
+                    <div class="form-actions">
+
+                      <input type="submit" value="Dodaj do powiadomien">
+        <input type="hidden" value="dummy" name="dummy">
+                          </div>
+            </form>
+</body>
+</html>
