@@ -1,11 +1,16 @@
 {% block title %}Main Page{% endblock %}
 <html>
 <body>
-<form method="post" action="/" style="margin:200px;">
+  <div style="border: 2px solid black;" style="margin:50px;">  
+<form method="post" action="/" style="margin:50px;">
             {% csrf_token %}
             Link
             <div class="form-group">
                     {{ form.Link }}
+                  </div>
+            Name
+            <div class="form-group">
+                    {{ form.Name }}
                   </div>
                   Bigger than
                   <div class="form-group">
@@ -19,8 +24,20 @@
                     <div class="form-actions">
 
                       <input type="submit" value="Dodaj do powiadomien">
-        <input type="hidden" value="dummy" name="dummy">
+        <input type="hidden" value="dummy" name="adding">
                           </div>
             </form>
-</body>
+          </div>
+            {% for info in Notifications %}
+            <div style="border: 2px solid black;">  
+            {{info}}
+            <form method="post" action="/">
+              {% csrf_token %}
+            <input type="submit" value="Usuń" >
+            <input type="hidden" value="{{info.0}}" name="delete">
+          </form>
+          </div>
+            {% endfor %}
+
+          </body>
 </html>
