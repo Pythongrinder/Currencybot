@@ -61,6 +61,7 @@ try:
         url = str(reader[2])
         biggerthan = reader[3]
         smallerthan = reader[4]
+        PhoneNumber = str(reader[5])
         #opening the page
         #url = "https://www.dextools.io/app/uniswap/pair-explorer/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11?fbclid=IwAR1flnUZAM_WD94UIY2wOJW7yaN5jiaBNqmdhNVV6cTeHVjLhxk-QWUJV7E"
         connecting = browser.get(url)
@@ -86,6 +87,8 @@ try:
         print(smallerthan)
         print("biggerthan")
         print(biggerthan)
+        print("phone number")
+        print(PhoneNumber)
         if price < smallerthan or  price > biggerthan: 
         # Your Account Sid and Auth Token from twilio.com/console
         # DANGER! This is insecure. See http://twil.io/secure
@@ -94,18 +97,22 @@ try:
             client = Client(account_sid, auth_token)
             message = client.messages \
                 .create(
-                    body=f'Notyfikacja odnosnie {name}',
+                    body=f'Notyfikacja odnosnie {name} obecna cena to {price}. Parametry: Cena powinna byc mniejsza od{smallerthan} i wieksza od {biggerthan}',
                     from_='+14254092949',
-                    to='+48725583900'
+                    to='+48' + str(PhoneNumber)
                 )
             print(message.sid)
             print("message sent")
         sleep(300)
 except Exception as ex:
+    browser.close()
+    browser.quit()
     print(ex) 
     try:
         f=open("logerrors.txt", "w+")
         now = datetime.now()
         f.write("scripped started running" + str(now) + str(ex) + '\n')
     except:
+        browser.close()
+        browser.quit()
         pass

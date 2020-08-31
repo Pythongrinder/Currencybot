@@ -1,1 +1,14 @@
-scripped started running2020-08-29 23:49:32.644572HTTPConnectionPool(host='127.0.0.1', port=55805): Max retries exceeded with url: /session/90f0bfbb7108bf9ef8a32ca566ab61c8/url (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7ff4d4f03ca0>: Failed to establish a new connection: [Errno 111] Connection refused'))
+scripped started running2020-09-01 01:02:57.607344
+[31m[49mHTTP Error[0m [37m[49mYour request was:[0m
+
+[36m[49mPOST /Accounts/ACcb2e453e9bd412cafdd544f39da1d20a/Messages.json[0m
+
+[37m[49mTwilio returned the following information:[0m
+
+[34m[49mUnable to create record: Authenticate[0m
+
+[37m[49mMore information may be available here:[0m
+
+[34m[49mhttps://www.twilio.com/docs/errors/20003[0m
+
+

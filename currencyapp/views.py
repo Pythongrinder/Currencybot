@@ -12,6 +12,8 @@ class InputForm(forms.Form):
     Name = forms.CharField(required=True, max_length=200, label="Name")
     BiggerThan = forms.FloatField(required=True, label="bigger than")
     SmallerThan = forms.FloatField(required=True, label="bigger than")
+    PhoneNumber = forms.IntegerField(required=True, label="Phone number")
+
 
 def create_connection(db_file):
 
@@ -62,6 +64,8 @@ def mainpage(request):
             Name = form.cleaned_data['Name']
             BiggerThan = form.cleaned_data['BiggerThan']
             SmallerThan = form.cleaned_data['SmallerThan']
+            PhoneNumber = form.cleaned_data['PhoneNumber']
+
             #textchecker(name, description, auctiondate, propertylink, voivodeship, city, price, meterage, propertytype, imglink)
             #cur = conn.cursor()
             #sqlite_delete_table_query2 = '''DROP TABLE Notifications   '''
@@ -71,9 +75,11 @@ def mainpage(request):
                                 Name Text NOT NULL,
                                 Link TEXT NOT NULL,
                                 BiggerThan FLOAT(16,2),
-                                SmallerThan FLOAT(16,2));'''
+                                SmallerThan FLOAT(16,2),
+                                PhoneNumber INT
+                                );'''
             cursor.execute(sqlite_create_table_query)
-            cursor.execute(f"""INSERT INTO Notifications (Link, Name, BiggerThan, SmallerThan) VALUES (?,?,?,?);""", (Link, Name, BiggerThan, SmallerThan))
+            cursor.execute(f"""INSERT INTO Notifications (Link, Name, BiggerThan, SmallerThan, PhoneNumber) VALUES (?,?,?,?,?);""", (Link, Name, BiggerThan, SmallerThan, PhoneNumber))
             conn.commit()
             return HttpResponseRedirect('/')
     cursor.execute("""SELECT * From Notifications""")
