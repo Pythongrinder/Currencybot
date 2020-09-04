@@ -20,7 +20,7 @@ import sqlite3
 from twilio.rest import Client
 from time import sleep
 from subprocess import call
-call(["killall", "chrome"])
+#call(["killall", "chrome"])
 
 
 # Date/ time info
@@ -56,57 +56,60 @@ try:
     cursor.execute("""SELECT * From Notifications""")
     records = cursor.fetchall()
     for reader in records:
-        print(reader[0])
-        print(reader[1])
-        print(reader[2])
-        print(reader[3])
-        name = reader[1]
-        url = str(reader[2])
-        biggerthan = reader[3]
-        smallerthan = reader[4]
-        PhoneNumber = str(reader[5])
-        #opening the page
-        #url = "https://www.dextools.io/app/uniswap/pair-explorer/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11?fbclid=IwAR1flnUZAM_WD94UIY2wOJW7yaN5jiaBNqmdhNVV6cTeHVjLhxk-QWUJV7E"
-        sleep(120)
-        connecting = browser.get(url)
-        results = browser.page_source
-        soup = BeautifulSoup(results, "lxml")
         try:
-            myElem = WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, r'/html/body/app-root/div[2]/div/main/app-uniswap/div/app-pairexplorer/app-layout/div/div/div[2]/div[1]/div/div[2]/ul/li[2]')))
-            print("the website is ready")
-        except TimeoutException:
-            print("website took too much time!")
-        results = browser.page_source
-        soup = BeautifulSoup(results, "lxml")
+            print(reader[0])
+            print(reader[1])
+            print(reader[2])
+            print(reader[3])
+            name = reader[1]
+            url = str(reader[2])
+            biggerthan = reader[3]
+            smallerthan = reader[4]
+            PhoneNumber = str(reader[5])
+            #opening the page
+            #url = "https://www.dextools.io/app/uniswap/pair-explorer/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11?fbclid=IwAR1flnUZAM_WD94UIY2wOJW7yaN5jiaBNqmdhNVV6cTeHVjLhxk-QWUJV7E"
+            sleep(300)
+            connecting = browser.get(url)
+            results = browser.page_source
+            soup = BeautifulSoup(results, "lxml")
+            try:
+                myElem = WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, r'/html/body/app-root/div[2]/div/main/app-uniswap/div/app-pairexplorer/app-layout/div/div/div[2]/div[1]/div/div[2]/ul/li[2]')))
+                print("the website is ready")
+            except TimeoutException:
+                print("website took too much time!")
+            results = browser.page_source
+            soup = BeautifulSoup(results, "lxml")
 
-        price1 = soup.find("title")
-        price2 = re.findall("\d*\.\d*\d", str(price1))
-        #<title>DAI $1.00907830 - Pair Explorer - DEXTools.io - BETA</title>
-        price = float(listcleaner(price2))
-        browser.close()
-        browser.quit()
-        print("price")
-        print(price)
-        print("smallerthan")
-        print(smallerthan)
-        print("biggerthan")
-        print(biggerthan)
-        print("phone number")
-        print(PhoneNumber)
-        if price < smallerthan or  price > biggerthan: 
-        # Your Account Sid and Auth Token from twilio.com/console
-        # DANGER! This is insecure. See http://twil.io/secure
-            account_sid = 'ACcb2e453e9bd412cafdd544f39da1d20a'
-            auth_token = 'd3ce983e57884c658aa0f122a2cf1493' 
-            client = Client(account_sid, auth_token)
-            message = client.messages \
-                .create(
-                    body=f'Notyfikacja odnosnie {name} obecna cena to {price}. Parametry: Cena powinna byc mniejsza od{smallerthan} i wieksza od {biggerthan}',
-                    from_='+14254092949',
-                    to='+48' + str(PhoneNumber)
-                )
-            print(message.sid)
-            print("message sent")
+            price1 = soup.find("title")
+            price2 = re.findall("\d*\.\d*\d", str(price1))
+            #<title>DAI $1.00907830 - Pair Explorer - DEXTools.io - BETA</title>
+            price = float(listcleaner(price2))
+            browser.close()
+            browser.quit()
+            print("price")
+            print(price)
+            print("smallerthan")
+            print(smallerthan)
+            print("biggerthan")
+            print(biggerthan)
+            print("phone number")
+            print(PhoneNumber)
+            if price < smallerthan or  price > biggerthan: 
+            # Your Account Sid and Auth Token from twilio.com/console
+            # DANGER! This is insecure. See http://twil.io/secure
+                account_sid = 'ACcb2e453e9bd412cafdd544f39da1d20a'
+                auth_token = 'd3ce983e57884c658aa0f122a2cf1493' 
+                client = Client(account_sid, auth_token)
+                message = client.messages \
+                    .create(
+                        body=f'Notyfikacja odnosnie {name} obecna cena to {price}. Parametry: Cena powinna byc mniejsza od{smallerthan} i wieksza od {biggerthan}',
+                        from_='+14254092949',
+                        to='+48' + str(PhoneNumber)
+                    )
+                print(message.sid)
+                print("message sent")
+        except:
+            continue
 except Exception as ex:
     browser.close()
     browser.quit()
