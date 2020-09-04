@@ -5,6 +5,7 @@ import math
 import re
 import pymysql
 import fileinput
+from subprocess import call
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,6 +19,8 @@ from datetime import datetime
 import sqlite3
 from twilio.rest import Client
 from time import sleep
+from subprocess import call
+call(["killall", "chrome"])
 
 
 # Date/ time info
@@ -64,8 +67,8 @@ try:
         PhoneNumber = str(reader[5])
         #opening the page
         #url = "https://www.dextools.io/app/uniswap/pair-explorer/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11?fbclid=IwAR1flnUZAM_WD94UIY2wOJW7yaN5jiaBNqmdhNVV6cTeHVjLhxk-QWUJV7E"
+        sleep(120)
         connecting = browser.get(url)
-        sleep(300)
         results = browser.page_source
         soup = BeautifulSoup(results, "lxml")
         try:
