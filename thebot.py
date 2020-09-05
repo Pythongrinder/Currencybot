@@ -82,6 +82,7 @@ try:
 
             price1 = soup.find("title")
             price2 = re.findall("\d*\.\d*\d", str(price1))
+            print(price2)
             #<title>DAI $1.00907830 - Pair Explorer - DEXTools.io - BETA</title>
             price = float(listcleaner(price2))
             browser.close()
@@ -108,8 +109,10 @@ try:
                     )
                 print(message.sid)
                 print("message sent")
-        except:
-            continue
+        except as ex::
+            continue            
+            print("a problem")
+            print(ex)
 except Exception as ex:
     browser.close()
     browser.quit()
