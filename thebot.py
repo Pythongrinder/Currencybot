@@ -36,16 +36,9 @@ def listcleaner(texttoclean):
     return cleaning
 
 print("starting ")
-chrome_options = Options()
-chrome_options.add_argument("--window-size=1920x1080")
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument("--no-sandbox")
-browser = webdriver.Chrome('chromedriver', options=chrome_options)
+
 global url
 global name
-browser.close
-browser.quit
 try:
     try:
         conn = sqlite3.connect('db.sqlite3')
@@ -56,6 +49,12 @@ try:
     cursor.execute("""SELECT * From Notifications""")
     records = cursor.fetchall()
     for reader in records:
+        chrome_options = Options()
+        chrome_options.add_argument("--window-size=1920x1080")
+        chrome_options.add_argument('--headless')
+        chrome_options.add_argument('--disable-gpu')
+        chrome_options.add_argument("--no-sandbox")
+        browser = webdriver.Chrome('chromedriver', options=chrome_options)
         try:
             print(reader[0])
             print(reader[1])
@@ -68,7 +67,7 @@ try:
             PhoneNumber = str(reader[5])
             #opening the page
             #url = "https://www.dextools.io/app/uniswap/pair-explorer/0xa478c2975ab1ea89e8196811f51a7b7ade33eb11?fbclid=IwAR1flnUZAM_WD94UIY2wOJW7yaN5jiaBNqmdhNVV6cTeHVjLhxk-QWUJV7E"
-            sleep(300)
+            #sleep(300)
             connecting = browser.get(url)
             results = browser.page_source
             soup = BeautifulSoup(results, "lxml")
@@ -111,24 +110,28 @@ try:
                 print("message sent")
             browser.quit()
             call(["killall", "chrome"])
-        except as ex::
-            continue            
+            print("ciekawe czy dziala")
+        except Exception as ex:
+            print(ex)
             browser.quit()
             call(["killall", "chrome"])
             print("a problem")
-            print(ex)
+            continue            
+            
 except Exception as ex:
+    print(ex) 
     browser.close()
     browser.quit()
     call(["killall", "chrome"])
-    print(ex) 
     try:
         f=open("logerrors.txt", "w+")
         now = datetime.now()
         f.write("scripped started running" + str(now) + str(ex) + '\n')
+        browser.close()
+        browser.quit()
+        call(["killall", "chrome"])
     except Exception as ex:
         print(ex)
         browser.close()
         browser.quit()
         call(["killall", "chrome"])
-        continue
