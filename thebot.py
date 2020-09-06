@@ -98,7 +98,7 @@ try:
             # Your Account Sid and Auth Token from twilio.com/console
             # DANGER! This is insecure. See http://twil.io/secure
                 account_sid = 'ACcb2e453e9bd412cafdd544f39da1d20a'
-                auth_token = 'd3ce983e57884c658aa0f122a2cf1493' 
+                auth_token = 'none' 
                 client = Client(account_sid, auth_token)
                 message = client.messages \
                     .create(
