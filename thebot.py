@@ -20,7 +20,7 @@ import sqlite3
 from twilio.rest import Client
 from time import sleep
 from subprocess import call
-#call(["killall", "chrome"])
+call(["killall", "chrome"])
 
 
 # Date/ time info
@@ -109,19 +109,26 @@ try:
                     )
                 print(message.sid)
                 print("message sent")
+            browser.quit()
+            call(["killall", "chrome"])
         except as ex::
             continue            
+            browser.quit()
+            call(["killall", "chrome"])
             print("a problem")
             print(ex)
 except Exception as ex:
     browser.close()
     browser.quit()
+    call(["killall", "chrome"])
     print(ex) 
     try:
         f=open("logerrors.txt", "w+")
         now = datetime.now()
         f.write("scripped started running" + str(now) + str(ex) + '\n')
-    except:
+    except Exception as ex:
+        print(ex)
         browser.close()
         browser.quit()
-        pass
+        call(["killall", "chrome"])
+        continue
