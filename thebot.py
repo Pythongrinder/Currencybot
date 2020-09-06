@@ -72,10 +72,10 @@ try:
             results = browser.page_source
             soup = BeautifulSoup(results, "lxml")
             try:
-                myElem = WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, r'/html/body/app-root/div[2]/div/main/app-uniswap/div/app-pairexplorer/app-layout/div/div/div[2]/div[1]/div/div[2]/ul/li[2]')))
+                myElem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.XPATH, r'/html/body/app-root/div[2]/div/main/app-uniswap/div/app-pairexplorer/app-layout/div/div/div[2]/div[1]/div/div[2]/ul/li[2]')))
                 print("the website is ready")
             except TimeoutException:
-                print("website took too much time!")
+                print("website didnt find the element!")
             results = browser.page_source
             soup = BeautifulSoup(results, "lxml")
 
